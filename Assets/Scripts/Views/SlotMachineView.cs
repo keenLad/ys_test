@@ -1,15 +1,27 @@
-﻿using System.Collections;
+﻿using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlotMachineView : MonoBehaviour
 {
+    public int _slotsCount = 5;
+    public int _rowCount = 3;
+
+
+
     [SerializeField]
-    int _slotsCount = 5;
+    WinConditions _conditions;
+
     [SerializeField]
     SlotView _slotPrefab;
     [SerializeField]
     Transform _slotsContainer;
+
+    [SerializeField]
+    Dropdown _betDropdown;
+
+
 
     List<SlotView> _slots = new List<SlotView>();
 
@@ -19,26 +31,60 @@ public class SlotMachineView : MonoBehaviour
         {
             SlotView slotView = Instantiate(_slotPrefab, _slotsContainer);
             _slots.Add(slotView);
+            slotView.Init(_rowCount);
         }
     }
 
-    private void OnGUI()
+    public void Roll()
     {
-        if(GUILayout.Button("Update machine"))
-        {
-            _slots.Clear();
-            _slotsContainer.ClearAll();
+        var selectedItem = _betDropdown.value;
+        int bet = int.Parse(_betDropdown.options[selectedItem].text);
 
-            Start();
+        if (User.instance.money < bet)
+        {
+            return;
         }
 
-        if(GUILayout.Button("Roll"))
+        User.instance.money -= bet;
+
+        foreach (var item in _slots)
         {
-            foreach(var item in _slots)
-            {
-                item.UpdateSlot();
-            }
+            item.UpdateSlot();
         }
+
+        CheckWins();
+    }
+
+    public void UpdateMachine()
+    {
+        _slots.Clear();
+        _slotsContainer.ClearAll();
+
+        Start();
+    }
+
+    void CheckWins()
+    {
+        List<SlotItem> result = new List<SlotItem>();
+        foreach (var item in _slots)
+        {
+            result.Add(item.slot.Content[1]);
+        }
+
+        var ranking = (from item in result
+                       group item by item.id into r
+                       orderby r.Count() descending
+                       select new { item = r.Key, count = r.Count() }).ToArray();
+
+        if (ranking[0].count >= 3)
+        {
+            var selectedItem = _betDropdown.value;
+            int bet = int.Parse(_betDropdown.options[selectedItem].text);
+
+            User.instance.money += bet * 1.5f;
+        }
+
+
     }
 
 

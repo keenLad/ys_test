@@ -12,11 +12,19 @@ public class SlotView : MonoBehaviour
     [SerializeField]
     SlotItemView _itemPrefab;
 
-
-    public void Init(Slot slot)
+    public Slot slot
     {
+        get => _slot;
+    }
+
+
+    public void Init(int rows = 3)
+    {
+        Slot slot = gameObject.GetComponent<Slot>();
         _slot = slot;
+        _slot.itemsCount = rows;
         _slot.OnValueChanged += OnSlotChanged;
+        UpdateSlot();
     }
 
     private void OnSlotChanged(Slot slot)
@@ -31,8 +39,6 @@ public class SlotView : MonoBehaviour
 
     private void Start()
     {
-        Slot slot = gameObject.GetComponent<Slot>();
-        Init(slot);
     }
 
     public void UpdateSlot()

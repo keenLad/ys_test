@@ -28,7 +28,7 @@ public class Slot : MonoBehaviour
         get => _content;
     }
 
-    private System.Random random = new System.Random();
+    private static System.Random random = new System.Random();
 
     private void Start()
     {
@@ -43,7 +43,7 @@ public class Slot : MonoBehaviour
             double shanse = random.NextDouble()*100;
             ItemElement newItem = items.FirstOrDefault(item => item.chanse.x < (float)shanse && (float)shanse < item.chanse.y);
             _content[i] = newItem.item;
-            Debug.LogFormat("Chanse: {0} ||| Item: {1}", shanse, newItem.item.id);
+            //Debug.LogFormat("Chanse: {0} ||| Item: {1}", shanse, newItem.item.id);
         }
 
         OnValueChanged?.Invoke(this);
