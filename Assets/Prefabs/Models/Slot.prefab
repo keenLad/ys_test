@@ -217,7 +217,7 @@ MonoBehaviour:
   - item: {fileID: 634360584621355414, guid: c77587146fe624902a2b874b519bd98a, type: 3}
     chanse: {x: 85, y: 92}
   - item: {fileID: 634360584621355414, guid: 47c9a9f69a41e4e47b70f5c7923c408d, type: 3}
-    chanse: {x: 0, y: 97}
+    chanse: {x: 92, y: 97}
   - item: {fileID: 634360584621355414, guid: b65683d2decc548ffa5490c1d86fa70f, type: 3}
     chanse: {x: 97, y: 100}
 --- !u!114 &8197163680496275159

@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[SerializeField]
-public class WinConditions 
+[Serializable]
+public class WinConditions
 {
-    private BitArray _conditions;
-    public BitArray conditions
-    {
-        get => _conditions;
-    }
+    public BitArray _conditions;
+    public List<WinRate> _winRate = new List<WinRate>();
+}
+
+public class WinRate
+{
+    public int count;
+    public float rate;
 }

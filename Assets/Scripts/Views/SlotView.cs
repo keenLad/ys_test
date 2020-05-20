@@ -30,15 +30,11 @@ public class SlotView : MonoBehaviour
     private void OnSlotChanged(Slot slot)
     {
         _itemsConteainer.ClearAll();
-        foreach(var item in slot.Content)
+        foreach (var item in slot.Content)
         {
             SlotItemView slotItem = Instantiate(_itemPrefab, _itemsConteainer);
             slotItem.Init(item);
         }
-    }
-
-    private void Start()
-    {
     }
 
     public void UpdateSlot()
